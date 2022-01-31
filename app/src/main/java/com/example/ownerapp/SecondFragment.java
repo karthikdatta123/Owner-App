@@ -16,7 +16,7 @@ import com.example.ownerapp.databinding.FragmentSecondBinding;
 
 public class SecondFragment extends Fragment {
 
-  private FragmentSecondBinding binding;
+    private FragmentSecondBinding binding;
 
   @Override
   public View onCreateView(
@@ -50,9 +50,10 @@ public class SecondFragment extends Fragment {
 //        });
   }
 
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-    binding = null;
-  }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
 }
