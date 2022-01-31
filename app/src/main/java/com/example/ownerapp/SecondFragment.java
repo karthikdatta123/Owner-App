@@ -13,6 +13,7 @@ import com.example.ownerapp.databinding.FragmentSecondBinding;
 
 public class SecondFragment extends Fragment {
 
+
     private FragmentSecondBinding binding;
 
     @Override
