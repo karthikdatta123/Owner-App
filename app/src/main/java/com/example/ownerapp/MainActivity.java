@@ -25,10 +25,4 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.FrameLayout, updateMenuMain);
         transaction.commit();
     }
-    public void replaceFragment1(SecondFragment secondFragment) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.FrameLayout, secondFragment);
-        transaction.commit();
-    }
 }
