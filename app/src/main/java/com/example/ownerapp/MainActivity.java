@@ -20,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
     List<Item> itemList4,itemList5,itemList6;
     List<SubCategory> subCategoryList1;
 
+    //Other Services
+    //Should actually be List<LocalGuideItem>, but hardcoding it in the adapter for now
+    List<Item> itemList7;
+    List<SubCategory> subCategoryList2;
+
     List<Category> categoryList;
 
     @Override
@@ -40,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         itemList5 = new ArrayList<>();
         itemList6 = new ArrayList<>();
         subCategoryList1 =new ArrayList<>();
+
+        itemList7=new ArrayList<>();
+        subCategoryList2 =new ArrayList<>();
 
         categoryList =new ArrayList<>();
         loadItems();
@@ -86,9 +94,22 @@ public class MainActivity extends AppCompatActivity {
 
         Category categoryLaundry=new Category("Laundry", subCategoryList1);
 
+        //Others
+        Item item8=new Item("","","LocalGuides",0,true);
+        itemList7.add(item8);
+
+        SubCategory subCategory7 =new SubCategory("LocalGuides",itemList7);
+        subCategoryList2.add(subCategory7);
+        Category categoryOthers=new Category("Other Services", subCategoryList2);
+
         categoryList.add(categoryFood);
         categoryList.add(categoryLaundry);
+        categoryList.add(categoryOthers);
         categoryAdapter=new CategoryAdapter(categoryList,getApplicationContext());
+
+
+
+
         recyclerView.setAdapter(categoryAdapter);
     }
 }

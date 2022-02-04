@@ -18,12 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RowAdapter extends RecyclerView.Adapter<ViewHolder1> {
+public class RowAdapter extends RecyclerView.Adapter {
     private List<Item> itemList;
     private static Context context;
 
     private int CATEGORY_FOOD_LAUNDRY=1;
-    private int CATEGORY_RENTALS=0;
+    private int CATEGORY_LOCALGUIDES =0;
 
     public RowAdapter(List<Item> itemList, Context context) {
         this.itemList = itemList;
@@ -37,44 +37,83 @@ public class RowAdapter extends RecyclerView.Adapter<ViewHolder1> {
     public int getItemViewType(int position) {
         //return super.getItemViewType(position);
         Item item=itemList.get(position);
-        if(item.getSubCategory().equals("LocalGuides"))return CATEGORY_RENTALS;
+        if(item.getSubCategory().equals("LocalGuides"))return CATEGORY_LOCALGUIDES;
         else return CATEGORY_FOOD_LAUNDRY;
     }
 
     @NonNull
     @Override
-    public ViewHolder1 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
         View view;
 
         //if food then row_item.xml
-//        if(viewType==CATEGORY_FOOD_LAUNDRY)
-//        view=layoutInflater.inflate(R.layout.row_item, parent, false);
-//        else if(viewType==CATEGORY_RENTALS)
-//        view=layoutInflater.inflate(R.layout.row_item_others, parent, false);
-
-        view=layoutInflater.inflate(R.layout.row_item_food, parent, false);
-
-        ViewHolder1 viewHolder=new ViewHolder1(view);
-        return viewHolder;//manages the rows, keeps track of individual rows-all img views,text views etc
+        if(viewType==CATEGORY_FOOD_LAUNDRY)
+        {
+            view=layoutInflater.inflate(R.layout.row_item_food, parent, false);
+            ViewHolder1 viewHolder=new ViewHolder1(view);
+            return  viewHolder;
+        }
+        else if(viewType==CATEGORY_LOCALGUIDES)
+        {
+            view=layoutInflater.inflate(R.layout.row_item_localguide, parent, false);
+            ViewHolder2 viewHolder=new ViewHolder2(view);
+            return viewHolder;
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder1 holder, int position) {
-        Item item=itemList.get(position);
-        holder.textView.setText(item.getName());
-        holder.textView2.setText(item.getPrice());
-
-        if(item.getCategoryName().equals("Laundry"))
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        int viewType=getItemViewType(position);
+        if(viewType==CATEGORY_FOOD_LAUNDRY)
         {
-            holder.imageView.setVisibility(View.GONE);
+            ViewHolder1 holder1=(ViewHolder1)holder;
+            Item item=itemList.get(position);
+            holder1.textView.setText(item.getName());
+            holder1.textView2.setText(item.getPrice());
+            if(item.getCategoryName().equals("Laundry"))
+            {
+                holder1.imageView.setVisibility(View.GONE);
+            }
         }
+        else if(viewType==CATEGORY_LOCALGUIDES)
+        {
+            ViewHolder2 holder2=(ViewHolder2)holder;
+
+            //Hard coded data for now
+
+            holder2.textView.setText("Person1");
+            holder2.textView1.setText("4.5");
+            holder2.textView2.setText("(481)");
+
+//          RentalItem item=itemList.get(Position);
+//          holder2.textView.setText(item.getName());   //local guide name
+//          holder2.textView1.setText(item.getRating());
+//          holder2.textView3.setText(item.getNumberOfRatings());
+        }
+
     }
+
+//    @Override
+//    public void onBindViewHolder(@NonNull ViewHolder1 holder, int position) {
+//        Item item=itemList.get(position);
+//        holder.textView.setText(item.getName());
+//        holder.textView2.setText(item.getPrice());
+//
+//        if(item.getCategoryName().equals("Laundry"))
+//        {
+//            holder.imageView.setVisibility(View.GONE);
+//        }
+//    }
     @Override
     public int getItemCount() {
         return itemList.size();
     }}
 
+
+
+//FOOD-row_item_food.xml
 class ViewHolder1 extends RecyclerView.ViewHolder{
 
     ImageView imageView;
@@ -87,6 +126,44 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
 
         imageView=itemView.findViewById(R.id.imageView);
         textView=itemView.findViewById(R.id.textView);
+        textView2=itemView.findViewById(R.id.textView2);
+        imageButton=itemView.findViewById(R.id.imageButton);
+        switch1=itemView.findViewById(R.id.switch1);
+
+        String itemActive="Item is active";
+        String itemInactive="Item is inactive";
+
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
+            {
+
+                if(isChecked)
+                    Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
+                else Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+}
+
+//LocalGuides-row_item_localguides.xml
+
+class ViewHolder2 extends RecyclerView.ViewHolder{
+
+    ImageView imageView;
+    TextView textView,textView1,textView2;
+    ImageButton imageButton;
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    Switch switch1;
+
+    public ViewHolder2(@NonNull View itemView) {
+        super(itemView);
+
+        imageView=itemView.findViewById(R.id.imageView);
+        textView=itemView.findViewById(R.id.textView);
+        textView1=itemView.findViewById(R.id.textView1);
         textView2=itemView.findViewById(R.id.textView2);
         imageButton=itemView.findViewById(R.id.imageButton);
         switch1=itemView.findViewById(R.id.switch1);

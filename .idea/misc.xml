@@ -6,10 +6,14 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/chevron_down_arrow.xml" value="0.240625" />
         <entry key="app/src/main/res/drawable/chevron_up_arrow.xml" value="0.240625" />
+        <entry key="app/src/main/res/drawable/message_outline.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/phone_icon.xml" value="0.11385541754580088" />
+        <entry key="app/src/main/res/drawable/phone_outline.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/star_red.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/categories_list.xml" value="0.19067028985507245" />
-        <entry key="app/src/main/res/layout/row_item_food.xml" value="0.36034802061895116" />
-        <entry key="app/src/main/res/layout/row_item_localguide.xml" value="0.3958117360659658" />
+        <entry key="app/src/main/res/layout/row_item_food.xml" value="0.33125871040837007" />
+        <entry key="app/src/main/res/layout/row_item_localguide.xml" value="0.3497511072038264" />
         <entry key="app/src/main/res/layout/row_item_rentals.xml" value="0.19067028985507245" />
         <entry key="app/src/main/res/layout/sub_categories_list.xml" value="0.19067028985507245" />
       </map>

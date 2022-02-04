@@ -13,12 +13,12 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-condensed-medium"
+        android:fontFamily="sans-serif-black"
 
         android:gravity="center"
         android:padding="10dp"
         android:text="Update Menu"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:visibility="visible"
         tools:ignore="MissingConstraints" />
 

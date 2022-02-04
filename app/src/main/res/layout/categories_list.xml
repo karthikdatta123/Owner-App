@@ -15,10 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-condensed-medium"
-
+        android:fontFamily="serif"
         android:text="Food"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

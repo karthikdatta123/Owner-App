@@ -11,9 +11,13 @@
         android:layout_width="343dp"
         android:layout_height="31dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"
         android:text="Category Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+
         app:layout_constraintTop_toTopOf="parent"
+
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="4dp" />
 
