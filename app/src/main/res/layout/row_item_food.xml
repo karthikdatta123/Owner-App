@@ -67,11 +67,10 @@
         android:id="@+id/imageButton"
         android:layout_width="42dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginTop="8dp"
 
+        android:backgroundTint="@color/white"
         android:src="@drawable/pencil"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/switch1"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/switch1"

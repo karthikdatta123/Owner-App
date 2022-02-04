@@ -1,6 +1,6 @@
 package com.example.ownerapp;
 
-public class RentalItem {
+public class LocalGuideItem {
     private String itemName, categoryName, subCategory;
     //private int categoryId,itemPrice;
     private boolean active;

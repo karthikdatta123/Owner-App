@@ -37,7 +37,7 @@ public class RowAdapter extends RecyclerView.Adapter<ViewHolder1> {
     public int getItemViewType(int position) {
         //return super.getItemViewType(position);
         Item item=itemList.get(position);
-        if(item.getSubCategory().equals("Rentals"))return CATEGORY_RENTALS;
+        if(item.getSubCategory().equals("LocalGuides"))return CATEGORY_RENTALS;
         else return CATEGORY_FOOD_LAUNDRY;
     }
 
