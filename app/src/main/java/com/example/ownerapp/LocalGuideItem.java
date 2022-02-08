@@ -1,9 +1,10 @@
 package com.example.ownerapp;
 
-public class LocalGuideItem {
+import java.io.Serializable;
+
+public class LocalGuideItem implements Serializable {
     private String itemName, categoryName, subCategory;
     private String phoneNumber;
-    //private int categoryId,itemPrice;
     private boolean active;
 
     public LocalGuideItem(String itemName, String categoryName, String subCategory,  String phoneNumber, boolean isActive)
@@ -31,4 +32,8 @@ public class LocalGuideItem {
     }
 
     public String getPhoneNumber(){return phoneNumber;}
+
+    public void setItemName(String itemName){this.itemName=itemName;}
+
+    public void setPhoneNumber(String phoneNumber){this.phoneNumber=phoneNumber;}
 }

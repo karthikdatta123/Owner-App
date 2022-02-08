@@ -11,13 +11,11 @@
         android:layout_width="343dp"
         android:layout_height="31dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="Category Name"
-
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-
+        android:textColor="@color/black"
+        android:textStyle="normal"
+        android:text="Category Name"
         app:layout_constraintTop_toTopOf="parent"
-
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="4dp" />
 
@@ -38,7 +36,8 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:layout_editor_absoluteX="1dp" />
+        tools:layout_editor_absoluteX="1dp"
+        tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/expandableLayout"
@@ -72,15 +71,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/white"
-
             android:shadowColor="@color/white"
             android:text="Add Item"
             android:textColor="@color/black"
-            app:cornerRadius="10dp"
+            app:cornerRadius="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

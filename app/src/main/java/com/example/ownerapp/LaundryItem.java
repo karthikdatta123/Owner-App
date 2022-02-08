@@ -1,13 +1,13 @@
 package com.example.ownerapp;
+
 import java.io.Serializable;
 
-public class Item implements Serializable {
+public class LaundryItem implements Serializable {
     private String itemName, categoryName, subCategory;
-    private String imageURL;
     private int itemPrice;
     private boolean active;
 
-    public Item(String itemName, String categoryName, String subCategory,  int itemPrice, boolean isActive) {
+    public LaundryItem(String itemName, String categoryName, String subCategory,  int itemPrice, boolean isActive) {
         this.itemName = itemName;
         this.categoryName = categoryName;
         this.subCategory = subCategory;
@@ -18,8 +18,6 @@ public class Item implements Serializable {
     public String getName() {
         return itemName;
     }
-
-    public String getImageURL(){ return imageURL; }
 
     public String getCategoryName() {
         return categoryName;

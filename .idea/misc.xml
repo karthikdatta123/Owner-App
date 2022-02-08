@@ -4,18 +4,38 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.23958333333333334" />
+        <entry key="app/src/main/res/drawable/camera_outline.xml" value="0.1265625" />
         <entry key="app/src/main/res/drawable/chevron_down_arrow.xml" value="0.240625" />
         <entry key="app/src/main/res/drawable/chevron_up_arrow.xml" value="0.240625" />
         <entry key="app/src/main/res/drawable/message_outline.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/nobackground_dialog.xml" value="0.1390625" />
         <entry key="app/src/main/res/drawable/phone_icon.xml" value="0.11385541754580088" />
         <entry key="app/src/main/res/drawable/phone_outline.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/rounded_backgound.xml" value="0.1265625" />
         <entry key="app/src/main/res/drawable/star_red.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/trash_can_outline.xml" value="0.1265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19067028985507245" />
-        <entry key="app/src/main/res/layout/categories_list.xml" value="0.19067028985507245" />
+        <entry key="app/src/main/res/layout/categories_list.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragement_addsubcategory.xml" value="0.2735034531537425" />
+        <entry key="app/src/main/res/layout/fragment_addfood.xml" value="0.12291666666666666" />
+        <entry key="app/src/main/res/layout/fragment_addlocalguide.xml" value="0.12291666666666666" />
+        <entry key="app/src/main/res/layout/fragment_addrental.xml" value="0.12291666666666666" />
+        <entry key="app/src/main/res/layout/fragment_category.xml" value="0.11041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.2591545956379482" />
+        <entry key="app/src/main/res/layout/fragment_food.xml" value="0.3002697881713188" />
+        <entry key="app/src/main/res/layout/fragment_laundary.xml" value="0.12291666666666666" />
+        <entry key="app/src/main/res/layout/fragment_laundry.xml" value="0.23232468062259512" />
+        <entry key="app/src/main/res/layout/fragment_localguide.xml" value="0.11041666666666666" />
+        <entry key="app/src/main/res/layout/fragment_rentals.xml" value="0.3394938200773982" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_tourist.xml" value="0.10567483815830202" />
         <entry key="app/src/main/res/layout/row_item_food.xml" value="0.33125871040837007" />
+        <entry key="app/src/main/res/layout/row_item_laundry.xml" value="0.3490292557174743" />
         <entry key="app/src/main/res/layout/row_item_localguide.xml" value="0.3497511072038264" />
         <entry key="app/src/main/res/layout/row_item_rentals.xml" value="0.19067028985507245" />
-        <entry key="app/src/main/res/layout/sub_categories_list.xml" value="0.19067028985507245" />
+        <entry key="app/src/main/res/layout/sub_categories_list.xml" value="0.2547684689386696" />
+        <entry key="app/src/main/res/layout/update_menu_main.xml" value="0.12291666666666666" />
       </map>
     </option>
   </component>
