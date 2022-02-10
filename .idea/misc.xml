@@ -5,10 +5,13 @@
       <map>
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.165625" />
+        <entry key="app/src/main/res/layout/date.xml" value="0.375" />
         <entry key="app/src/main/res/layout/final_view.xml" value="0.2270074198741342" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.165625" />
-        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.165625" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/order_item.xml" value="0.1272069204429533" />
+        <entry key="app/src/main/res/layout/room_no.xml" value="0.16875" />
         <entry key="app/src/main/res/layout/text_row_item.xml" value="0.25364583333333335" />
       </map>
     </option>

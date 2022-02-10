@@ -39,7 +39,7 @@ public  List<Orders> list=new ArrayList<Orders>();
         Orders s=list.get(position);
         viewHolder.dateView.setText(s.date);
         viewHolder.recyclerView1.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView1.getContext()));
-        RoomAdapter room_view=new RoomAdapter(s.rooms);
+        RoomAdapter room_view=new RoomAdapter(s.rooms,s);
         viewHolder.recyclerView1.setAdapter(room_view);
     }
     @Override
