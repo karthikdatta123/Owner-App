@@ -2,7 +2,8 @@ package com.example.ownerapp;
 import java.io.Serializable;
 
 public class Item implements Serializable {
-    private String itemName, categoryName, subCategory;
+    private String itemName;
+    String categoryName, subCategory;
     private String imageURL;
     private int itemPrice;
     private boolean active;

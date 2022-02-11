@@ -49,13 +49,14 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         SubCategory subCategory = subCategoryList.get(position);
 
         //textView3 will be (sub)subCategory name -
-        holder.textView3.setText(subCategory.getName());
+        holder.textView3.setText(subCategory.getSubCategoryName());
 
-        boolean isExpanded= subCategory.getExpanded();
+        boolean isExpanded= subCategory.isExpanded();
         holder.expandableLayout.setVisibility(isExpanded? View.VISIBLE : View.GONE);
 
+
         //populate recyclerView with row_item.xml UI
-        rowAdapter = new RowAdapter(subCategory.getItems(), context.getApplicationContext());
+        rowAdapter = new RowAdapter(categoryName, subCategory, context.getApplicationContext());
         holder.recyclerView1.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
         holder.recyclerView1.setHasFixedSize(true);
         holder.recyclerView1.setAdapter(rowAdapter);
@@ -85,7 +86,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                 @Override
                 public void onClick(View view) {
                     SubCategory subCategory = subCategoryList.get(getAdapterPosition());
-                    boolean isExpanded= subCategory.getExpanded();
+                    boolean isExpanded= subCategory.isExpanded();
                     if(isExpanded)
                         expandable_icon.setImageResource(R.drawable.chevron_up_arrow);
                     else  expandable_icon.setImageResource(R.drawable.chevron_down_arrow);
@@ -101,7 +102,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                     if(categoryName.equals("Food")) {
                         AddItemFood addItemFood = new AddItemFood();
                         Bundle bundle = new Bundle();
-                        bundle.putString("subCategoryName", subCategory.getName());
+                        bundle.putString("subCategoryName", subCategory.getSubCategoryName());
                         addItemFood.setArguments(bundle);
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         FragmentManager manager = activity.getSupportFragmentManager();
@@ -111,27 +112,27 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                     {
                         AddItemLaundry addItemLaundry=new AddItemLaundry();
                         Bundle bundle = new Bundle();
-                        bundle.putString("subCategoryName", subCategory.getName());
+                        bundle.putString("subCategoryName", subCategory.getSubCategoryName());
                         addItemLaundry.setArguments(bundle);
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         FragmentManager manager = activity.getSupportFragmentManager();
                         addItemLaundry.show(manager,addItemLaundry.getTag());
                     }
-                    else if(subCategory.getName().equals("Rentals"))
+                    else if(subCategory.getSubCategoryName().equals("Rentals"))
                     {
                         AddItemRental addItemRental=new AddItemRental();
                         Bundle bundle = new Bundle();
-                        bundle.putString("subCategoryName", subCategory.getName());
+                        bundle.putString("subCategoryName", subCategory.getSubCategoryName());
                         addItemRental.setArguments(bundle);
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         FragmentManager manager = activity.getSupportFragmentManager();
                         addItemRental.show(manager,addItemRental.getTag());
                     }
-                    else if(subCategory.getName().equals("Local Guides"))
+                    else if(subCategory.getSubCategoryName().equals("Tourist Guide"))
                     {
                         AddItemLocalGuide addItemRental=new AddItemLocalGuide();
                         Bundle bundle = new Bundle();
-                        bundle.putString("subCategoryName", subCategory.getName());
+                        bundle.putString("subCategoryName", subCategory.getSubCategoryName());
                         addItemRental.setArguments(bundle);
                         AppCompatActivity activity = (AppCompatActivity) view.getContext();
                         FragmentManager manager = activity.getSupportFragmentManager();

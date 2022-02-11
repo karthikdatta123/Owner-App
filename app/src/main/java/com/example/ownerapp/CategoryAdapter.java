@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //populate recyclerView with list_layout_items.xml UI
         subCategoryAdapter = new SubCategoryAdapter(category.getCategoryList(),category.getCategoryName(), context.getApplicationContext());
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
-        //holder.recyclerView.setHasFixedSize(true);
+//       holder.recyclerView.setHasFixedSize(true);
         holder.recyclerView.setAdapter(subCategoryAdapter);
     }
 

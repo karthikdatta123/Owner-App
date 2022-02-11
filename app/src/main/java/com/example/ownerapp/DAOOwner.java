@@ -11,44 +11,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DAOOwner {
-    private DatabaseReference databaseReference;
-    public DAOOwner()
-    {
-//        FirebaseDatabase db = FirebaseDatabase.getInstance();
-//        databaseReference = db.getReference(Item.class.getSimpleName());
-////        databaseReference = db.getReference(categories.class.getSimpleName());
-        Log.d("firebase testing","dgfhdgfh");
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("categories");
-        Task<DataSnapshot> d= myRef.get();
+  String TAG = "Firebase testing";
+  public static FirebaseDatabase db ;
 
-        //for(DataSnapshot d1:d)
-//        for(Task<DataSnapshot> d:myRef.get())
-//        {
-//
-//        }
-
-        FirebaseDatabase.getInstance().getReference("categories")
-                .addValueEventListener(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("firebase testing","dgfhdgfh");
-                        if(snapshot.exists())
-                        {
-                            for(DataSnapshot d:snapshot.getChildren())
-                            //for(int i=0;i<snapshot.getChildrenCount();i++)
-                            {
-                                String name=d.getKey().toString();
-                                Log.d("firebase testing",name);
-                            }
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                } );
-
-
-}}
+  public static FirebaseDatabase getFirebaseDatabase() {
+    if (db == null) {
+      db = FirebaseDatabase.getInstance();
+    }
+    return db;
+  }
+}

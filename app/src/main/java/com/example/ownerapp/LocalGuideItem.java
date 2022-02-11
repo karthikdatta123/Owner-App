@@ -3,32 +3,22 @@ package com.example.ownerapp;
 import java.io.Serializable;
 
 public class LocalGuideItem implements Serializable {
-    private String itemName, categoryName, subCategory;
+    private String itemName;
     private String phoneNumber;
-    private boolean active;
+    private boolean available;
 
-    public LocalGuideItem(String itemName, String categoryName, String subCategory,  String phoneNumber, boolean isActive)
+    public LocalGuideItem(String itemName, String phoneNumber, boolean available)
     {
         this.itemName = itemName;
-        this.categoryName = categoryName;
-        this.subCategory = subCategory;
         this.phoneNumber=phoneNumber;
-        this.active = isActive;
+        this.available = available;
     }
     public String getName() {
         return itemName;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public String getSubCategory() {
-        return subCategory;
-    }
-
-    public boolean isActive() {
-        return active;
+    public boolean isAvailable() {
+        return available;
     }
 
     public String getPhoneNumber(){return phoneNumber;}

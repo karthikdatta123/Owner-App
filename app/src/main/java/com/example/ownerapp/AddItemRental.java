@@ -13,10 +13,13 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class AddItemRental extends BottomSheetDialogFragment {
     RentalItem item;
     private String subCategoryName;
+    private String categoryName;
 
     public AddItemRental() {
         // Required empty public constructor
@@ -32,6 +35,7 @@ public class AddItemRental extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        categoryName="Other Services";
         if (this.getArguments() != null) {
 
             // Add Item button clicked from SubCategoryAdapter
@@ -59,21 +63,40 @@ public class AddItemRental extends BottomSheetDialogFragment {
 
         if(item!=null)
         {
-            String subCategoryName = item.getSubCategory();
             String itemName = item.getName();
             String itemPrice = item.getPrice();
             textInputEditText1.setText(itemName);
             textInputEditText2.setText(itemPrice);
         }
+        else{
+            delete.setVisibility(View.GONE);
+        }
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"Changes Applied",Toast.LENGTH_SHORT).show();
-                String name=textInputEditText1.getText().toString();
-                int price=Integer.parseInt(
+                String name = textInputEditText1.getText().toString();
+                int price = Integer.parseInt(
                         textInputEditText2.getText().toString());
-                item.setName(name);
-                item.setPrice(price);
+                if (item != null) {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                                                                  .getReference("categories")
+                                                                  .child(categoryName)
+                                                                  .child(subCategoryName);
+                    databaseReference.child(name).child("name").setValue(name);
+                    databaseReference.child(name).child("price").setValue(price);
+
+                } else {
+                    RentalItem rentalItem = new RentalItem(name, price, true);
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                                                                  .getReference("categories")
+                                                                  .child(categoryName)
+                                                                  .child(subCategoryName);
+                    DatabaseReference newItemRef = databaseReference.child(name);
+                    newItemRef.setValue(rentalItem);
+                }
+                //Add Item
+                Toast.makeText(getContext(), "Changes Applied", Toast.LENGTH_SHORT).show();
+                dismiss();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +108,15 @@ public class AddItemRental extends BottomSheetDialogFragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //a popup should appear to confirm delete
+                if(item!=null)
+                {
+                    DatabaseReference databaseReference= FirebaseDatabase.getInstance()
+                                                                 .getReference("categories")
+                                                                 .child(categoryName)
+                                                                 .child(subCategoryName);
+                    databaseReference.child(item.getName()).removeValue();
+                }
+                dismiss();
             }
         });
     }
