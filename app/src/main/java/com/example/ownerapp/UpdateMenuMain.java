@@ -58,7 +58,7 @@ public class UpdateMenuMain extends Fragment {
         return view;
     }
     private void loadItems() {
-        FirebaseDatabase.getInstance().getReference("categories")
+        DAOOwner.getFirebaseDatabase().getReference("categories")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

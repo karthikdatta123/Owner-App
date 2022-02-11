@@ -6,6 +6,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -67,9 +68,9 @@ public class AddItemFood extends BottomSheetDialogFragment {
     Button applyButton = view.findViewById(R.id.button1);
     TextInputEditText textInputEditText1 = view.findViewById(R.id.textInput1);
     TextInputEditText textInputEditText2 = view.findViewById(R.id.textInput2);
-    ImageView editPicture = view.findViewById(R.id.imageView1);
-    ImageView delete = view.findViewById(R.id.imageView2);
-      SwitchMaterial switch1=view.findViewById(R.id.switch1);
+    ImageView uploadImage = view.findViewById(R.id.imageView2);
+    ImageView delete = view.findViewById(R.id.imageView1);
+    SwitchMaterial switch1=view.findViewById(R.id.switch1);
 
     if (item != null) {
       String itemName = item.getName();
@@ -107,6 +108,12 @@ public class AddItemFood extends BottomSheetDialogFragment {
               }
 
       );
+    uploadImage.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //openFileChooser();
+        }
+    });
 
     applyButton.setOnClickListener(
         new View.OnClickListener() {
@@ -130,7 +137,7 @@ public class AddItemFood extends BottomSheetDialogFragment {
               //Add Item
               else {
                   FoodItem foodItem = new FoodItem(name, price, "", available);
-                  DatabaseReference databaseReference = DAOOwner.db
+                  DatabaseReference databaseReference = DAOOwner.getFirebaseDatabase()
                                                                 .getReference("categories")
                                                                 .child("Food")
                                                                 .child(subCategoryName);
@@ -154,18 +161,15 @@ public class AddItemFood extends BottomSheetDialogFragment {
           public void onClick(View view) {
               if(item!=null)
               {
-                  DatabaseReference databaseReference= DAOOwner.getFirebaseDatabase()
-                                                               .getReference("categories")
-                                                               .child("Food")
-                                                               .child(subCategoryName);
-                  databaseReference.child(item.getName()).removeValue();
-                  dismiss();
+                  DAOOwner.deleteItem(categoryName,subCategoryName,item.getName());
               }
+              dismiss();
           }
         });
   }
 
-  @Override
+
+    @Override
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // Inflate the layout for this fragment
@@ -173,4 +177,13 @@ public class AddItemFood extends BottomSheetDialogFragment {
     view.setBackgroundResource(R.drawable.rounded_backgound);
     return view;
   }
+
+//    private void openFileChooser(){
+//        Intent intent=new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivity(intent);
+//        //startActivity(intent,IMAGE);
+//    }
+
 }

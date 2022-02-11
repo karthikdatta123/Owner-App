@@ -44,7 +44,7 @@ public class AddSubCategory extends BottomSheetDialogFragment {
 			@Override
 			public void onClick(View view) {
 				String name=textInputEditText1.getText().toString();
-				DatabaseReference databaseReference= FirebaseDatabase.getInstance()
+				DatabaseReference databaseReference = DAOOwner.getFirebaseDatabase()
 															 .getReference("categories")
 															 .child(categoryName);
 				DatabaseReference newCategoryRef = databaseReference.child(String.valueOf(name));

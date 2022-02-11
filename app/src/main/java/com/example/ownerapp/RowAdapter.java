@@ -204,7 +204,6 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
                                                     Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
                                                     if(item.getName().equals(name)){
                                                         items.child("available").getRef().setValue(true);
-                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
                                                     }
                                                 }
                                             }}

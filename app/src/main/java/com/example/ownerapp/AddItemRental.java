@@ -110,11 +110,7 @@ public class AddItemRental extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 if(item!=null)
                 {
-                    DatabaseReference databaseReference= FirebaseDatabase.getInstance()
-                                                                 .getReference("categories")
-                                                                 .child(categoryName)
-                                                                 .child(subCategoryName);
-                    databaseReference.child(item.getName()).removeValue();
+                    DAOOwner.deleteItem(categoryName,subCategoryName,item.getName());
                 }
                 dismiss();
             }

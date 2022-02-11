@@ -82,7 +82,7 @@ public class AddItemLaundry extends BottomSheetDialogFragment {
 
                     item.setName(name);
                     item.setPrice(price);
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                    DatabaseReference databaseReference = DAOOwner.getFirebaseDatabase()
                                                                   .getReference("categories")
                                                                   .child(categoryName)
                                                                   .child(subCategoryName);
@@ -91,7 +91,7 @@ public class AddItemLaundry extends BottomSheetDialogFragment {
                 }
                 else{
                     LaundryItem laundryItem = new LaundryItem(name, price, true);
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                    DatabaseReference databaseReference = DAOOwner.getFirebaseDatabase()
                                                                   .getReference("categories")
                                                                   .child(categoryName)
                                                                   .child(subCategoryName);
@@ -113,13 +113,10 @@ public class AddItemLaundry extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 if(item!=null)
                 {
-                    DatabaseReference databaseReference= FirebaseDatabase.getInstance()
-                                                                 .getReference("categories")
-                                                                 .child(categoryName)
-                                                                 .child(subCategoryName);
-                    databaseReference.child(item.getName()).removeValue();
-                    dismiss();
-                }            }
+                    DAOOwner.deleteItem(categoryName,subCategoryName,item.getName());
+                }
+                dismiss();
+            }
         });
     }
     @Override
