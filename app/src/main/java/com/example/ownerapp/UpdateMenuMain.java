@@ -150,7 +150,7 @@ public class UpdateMenuMain extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.setReorderingAllowed(true);
-                transaction.replace(R.id.constraintLayout, SecondFragment.class, null);
+                transaction.replace(R.id.constraintLayout, Summary_owner.class, null);
                 transaction.commit();
             }
         });

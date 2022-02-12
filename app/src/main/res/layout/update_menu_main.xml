@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
     tools:context=".MainActivity"
     tools:ignore="ExtraText"
     android:background="@color/white">
@@ -21,7 +20,6 @@
         android:gravity="left"
         android:padding="10dp"
         android:text="Update Menu"
-        android:fontFamily="@font/inter_fonts"
         android:paddingBottom="16dp"
         android:fontFamily="@font/inter_extrabold"
         android:textColor="#141414"
