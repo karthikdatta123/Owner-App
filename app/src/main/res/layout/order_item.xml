@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/order"
+        android:layout_width="365dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/inter_fonts"
+        android:gravity="bottom"
+        android:textColor="#141414"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="356dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/inter_fonts"
+        android:gravity="top"
+        android:textColor="#737373"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

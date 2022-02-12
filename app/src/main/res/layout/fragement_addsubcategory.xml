@@ -16,6 +16,7 @@
         android:minHeight="48dp"
         android:text=""
         android:visibility="gone"
+        android:fontFamily="@font/inter_fonts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
         app:boxStrokeWidth="0.8dp"
         app:boxStrokeWidthFocused="0.8dp"
         app:hintTextColor="@color/black"
+        android:fontFamily="@font/inter_fonts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -62,6 +64,7 @@
         android:layout_marginBottom="4dp"
         android:text="Cancel"
         android:textColor="#F12D2D"
+        android:fontFamily="@font/inter_fonts"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"

@@ -16,7 +16,7 @@
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="@font/inter_fonts"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -37,10 +37,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/heading"
         android:layout_width="72dp"
         android:layout_height="24dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/inter_fonts"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/cardview_dark_background"
@@ -59,6 +59,7 @@
         android:checked="true"
         android:minHeight="48dp"
         android:text=""
+        android:fontFamily="@font/inter_fonts"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
