@@ -2,6 +2,7 @@ package com.example.ownerapp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,35 +11,36 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.example.ownerapp.databinding.FragmentFirstBinding;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateMenuMain extends Fragment {
 
+    private List<FoodItem> foodItemList = new ArrayList<>();
+    private List<LaundryItem> laundryItemList = new ArrayList<>();
+    private List<RentalItem> rentalItemList = new ArrayList<>();
+    private List<LocalGuideItem> touristItemList = new ArrayList<>();
+    private List<SubCategory> subcategoryList = new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
+
     View view;
     RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
-    //Food
-    List<Item> itemList1,itemList2,itemList3;
-    List<SubCategory> subCategoryList;
-
-    //Laundry
-    List<Item> itemList4,itemList5,itemList6;
-    List<SubCategory> subCategoryList1;
-
-    //Other Services
-    //Should actually be List<LocalGuideItem>, but hardcoding it in the adapter for now
-    List<Item> itemList7,itemList8;
-    List<SubCategory> subCategoryList2;
-
-    List<Category> categoryList;
     Button button;
-    TextView textView;
+    TextView textView,orders;
 
     @Override
     public View onCreateView(
@@ -47,96 +49,92 @@ public class UpdateMenuMain extends Fragment {
     {
         view=inflater.inflate(R.layout.update_menu_main,container,false);
         super.onCreate(savedInstanceState);
-
         button=view.findViewById(R.id.button);
         textView=view.findViewById(R.id.textView1);
+        orders = view.findViewById(R.id.textView1);
 
         recyclerView =view.findViewById(R.id.recyclerView);
         //recyclerView2.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-
-        itemList1 = new ArrayList<>();
-        itemList2 = new ArrayList<>();
-        itemList3 = new ArrayList<>();
-        subCategoryList =new ArrayList<>();
-
-        itemList4 = new ArrayList<>();
-        itemList5 = new ArrayList<>();
-        itemList6 = new ArrayList<>();
-        subCategoryList1 =new ArrayList<>();
-
-        itemList7=new ArrayList<>();
-        itemList8=new ArrayList<>();
-        subCategoryList2 =new ArrayList<>();
-
-        categoryList =new ArrayList<>();
         loadItems();
-        recyclerView.setAdapter(categoryAdapter);
         return view;
     }
     private void loadItems() {
-        Item item1=new Item("North Indian Thali","Food","Thali",80,true);
-        Item item2=new Item("South Indian Thali","Food","Thali",60,true);
-        Item item3=new Item("Chicken Biryani","Food","Rice And Biryani",120,true);
-        Item item4=new Item("Egg Fried Rice","Food","Indo-Chinese",90,true);
+        DAOOwner.getFirebaseDatabase().getReference("categories")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        categoryList = new ArrayList<>();
+                        if (snapshot.exists()) {
+                            for (DataSnapshot category : snapshot.getChildren()) {
+                                if (category.exists()) {
+                                    String categoryName = category.getKey().toString();
+                                    subcategoryList = new ArrayList<>();
+                                    for (DataSnapshot subcategory : category.getChildren()) {
+                                        if (subcategory.exists()) {
+                                            foodItemList = new ArrayList<>();
+                                            laundryItemList = new ArrayList<>();
+                                            rentalItemList = new ArrayList<>();
+                                            touristItemList = new ArrayList<>();
 
-        itemList1.add(item1);
-        itemList1.add(item2);
-        SubCategory subCategory1 =new SubCategory("Thali",itemList1);
-        subCategoryList.add(subCategory1);
+                                            String subcategoryName = subcategory.getKey().toString();
+                                            for (DataSnapshot item : subcategory.getChildren()) {
+                                                if (item.exists()) {
+                                                    try {
+                                                        Log.d("Item names ", item.child("name").getValue().toString());
+                                                        if (categoryName.equals("Food")) {
+                                                            FoodItem foodItem = new FoodItem(
+                                                                    item.child("name").getValue().toString(),
+                                                                    Integer.parseInt(item.child("price").getValue().toString()),
+                                                                    item.child("imageURL").getValue().toString(),
+                                                                    Boolean.parseBoolean(item.child("available").getValue().toString())
+                                                            );
+                                                            foodItemList.add(foodItem);
+                                                        } else if (categoryName.equals("Laundry")) {
+                                                            laundryItemList.add(new LaundryItem(
+                                                                    item.child("name").getValue().toString(),
+                                                                    Integer.parseInt(item.child("price").getValue().toString()),
+                                                                    Boolean.parseBoolean(item.child("available").getValue().toString())
+                                                            ));
+                                                        } else {
+                                                            if (subcategoryName.equals("Rentals")) {
+                                                                rentalItemList.add(new RentalItem(
+                                                                        item.child("name").getValue().toString(),
+                                                                        Integer.parseInt(item.child("price").getValue().toString()),
+                                                                        Boolean.parseBoolean(item.child("available").getValue().toString())
+                                                                ));
+                                                            } else {
+                                                                touristItemList.add(new LocalGuideItem(
+                                                                        item.child("name").getValue().toString(),
+                                                                        item.child("phoneNumber").getValue().toString(),
+                                                                        Boolean.parseBoolean(item.child("available").getValue().toString())
+                                                                ));
+                                                            }
+                                                        }
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }
+                                            subcategoryList.add(new SubCategory(subcategoryName, foodItemList, laundryItemList, rentalItemList, touristItemList));
+                                        }
+                                    }
+                                    categoryList.add(new Category(categoryName, subcategoryList));
+                                }
+                            }
+                        }
+                        categoryAdapter = new CategoryAdapter(categoryList, getApplicationContext());
+                        recyclerView.setAdapter(categoryAdapter);
+                        categoryAdapter.notifyDataSetChanged();
+                    }
 
-        itemList2.add(item3);
-        SubCategory subCategory2 =new SubCategory("Rice & Biryani",itemList2);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-        itemList3.add(item4);
-        SubCategory subCategory3 =new SubCategory("Indo-Chinese",itemList3);
-
-        //sub categories under Food
-        subCategoryList.add(subCategory2);
-        subCategoryList.add(subCategory3);
-
-        Category categoryFood=new Category("Food", subCategoryList);
+                    }
+                });
 
 
-        Item item5=new Item("T-shirt","Laundry","Wash & Fold",5,true);
-        Item item6=new Item("Pants","Laundry","Wash & Fold",5,true);
-        Item item7=new Item("Jackets/Shirts","Laundry","Wash & Fold",5,true);
-        itemList4.add(item5);
-        itemList4.add(item6);
-        itemList4.add(item7);
-
-        SubCategory subCategory4 =new SubCategory("Wash & Fold",itemList4);
-        SubCategory subCategory5 =new SubCategory("Dry Cleaning",itemList4);
-        SubCategory subCategory6 =new SubCategory("Ironing",itemList4);
-
-        //sub categories under Laundry
-        subCategoryList1.add(subCategory4);
-        subCategoryList1.add(subCategory5);
-        subCategoryList1.add(subCategory6);
-
-        Category categoryLaundry=new Category("Laundry", subCategoryList1);
-
-        //Others
-
-        Item item8=new Item("Bike","Other Services","Rentals",1100,true);
-        itemList7.add(item8);
-
-        Item item9=new Item("Person1","Other Services","Local Guides",0,true);
-        itemList8.add(item9);
-
-        SubCategory subCategory7=new SubCategory("Rentals",itemList7);
-        SubCategory subCategory8 =new SubCategory("Local Guides",itemList8);
-
-        subCategoryList2.add(subCategory7);
-        subCategoryList2.add(subCategory8);
-        Category categoryOthers=new Category("Other Services", subCategoryList2);
-
-
-        categoryList.add(categoryFood);
-        categoryList.add(categoryLaundry);
-        categoryList.add(categoryOthers);
-
-        categoryAdapter=new CategoryAdapter(categoryList,getApplicationContext());
     }
 
     private Context getApplicationContext() {
@@ -145,6 +143,17 @@ public class UpdateMenuMain extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create new fragment and transaction
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setReorderingAllowed(true);
+                transaction.replace(R.id.constraintLayout, SecondFragment.class, null);
+                transaction.commit();
+            }
+        });
     }
     @Override
     public void onDestroyView() {

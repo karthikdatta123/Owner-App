@@ -4,9 +4,13 @@ package com.example.ownerapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,39 +28,59 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 public class RowAdapter extends RecyclerView.Adapter {
-    private List<Item> itemList;
+    private SubCategory subCategory;
+    private String categoryName;
 
     private static Context context;
 
-    private int CATEGORY_FOOD =0;
-    private int CATEGORY_LAUNDRY =1;
-    private int CATEGORY_RENTALS=2;
-    private int CATEGORY_LOCALGUIDES =3;
+    private final int CATEGORY_FOOD =0;
+    private final int CATEGORY_LAUNDRY =1;
+    private final int CATEGORY_RENTALS=2;
+    private final int CATEGORY_LOCALGUIDES =3;
+    private int CATEGORY;
 
-    public RowAdapter(List<Item> itemList, Context context) {
-        this.itemList = itemList;
+    public RowAdapter(String categoryName,SubCategory subCategory, Context context) {
+        Log.d("Row Adapter ",subCategory.getSubCategoryName()+" "+
+                                     subCategory.getFoodItemList().size()+" "+
+                                     subCategory.getLaundryItemList().size()+" "+
+                                     subCategory.getRentalItemList().size()+"  "+
+                                     subCategory.getTouristItemList().size()+"\n");
+        this.categoryName=categoryName;
+        this.subCategory=subCategory;
         this.context = context;
-
+        setCategoryType();
+    }
+    public void setCategoryType()
+    {
+        this.CATEGORY=CATEGORY_FOOD;
+        if(categoryName.equals("Food"))
+            CATEGORY= ((int) CATEGORY_FOOD);
+        else if(categoryName.equals("Laundry"))
+            CATEGORY=CATEGORY_LAUNDRY;
+        else if(subCategory.getSubCategoryName().equals("Rentals"))
+            CATEGORY=CATEGORY_RENTALS;
+        else if(subCategory.getSubCategoryName().equals("Tourist Guide"))
+            CATEGORY=CATEGORY_LOCALGUIDES;
     }
     public static Context getContext()
     {return context;}
-
-    @Override
-    public int getItemViewType(int position) {
-        //return super.getItemViewType(position);
-        Item item=itemList.get(position);
-        if(item.getCategoryName().equals("Food"))return CATEGORY_FOOD;
-        if(item.getCategoryName().equals("Laundry"))return CATEGORY_LAUNDRY;
-        if(item.getSubCategory().equals("Rentals"))return CATEGORY_RENTALS;
-        if(item.getSubCategory().equals("Local Guides"))return CATEGORY_LOCALGUIDES;
-        else return CATEGORY_FOOD;
-    }
 
     @NonNull
     @Override
@@ -65,25 +89,25 @@ public class RowAdapter extends RecyclerView.Adapter {
         View view;
 
         //if food then row_item.xml
-        if(viewType== CATEGORY_FOOD)
+        if(CATEGORY== CATEGORY_FOOD)
         {
             view=layoutInflater.inflate(R.layout.row_item_food, parent, false);
             ViewHolder1 viewHolder=new ViewHolder1(view);
             return  viewHolder;
         }
-        else if(viewType==CATEGORY_LAUNDRY)
+        else if(CATEGORY==CATEGORY_LAUNDRY)
         {
             view=layoutInflater.inflate(R.layout.row_item_laundry, parent, false);
             ViewHolder2 viewHolder=new ViewHolder2(view);
             return viewHolder;
         }
-        else if(viewType==CATEGORY_RENTALS)
+        else if(CATEGORY==CATEGORY_RENTALS)
         {
             view=layoutInflater.inflate(R.layout.row_item_rentals, parent, false);
             ViewHolder3 viewHolder=new ViewHolder3(view);
             return viewHolder;
         }
-        else if(viewType==CATEGORY_LOCALGUIDES)
+        else if(CATEGORY == CATEGORY_LOCALGUIDES)
         {
             view=layoutInflater.inflate(R.layout.row_item_localguide, parent, false);
             ViewHolder4 viewHolder=new ViewHolder4(view);
@@ -95,47 +119,69 @@ public class RowAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int viewType=getItemViewType(position);
-        if(viewType== CATEGORY_FOOD)
+        if(CATEGORY== CATEGORY_FOOD)
         {
             ViewHolder1 holder1=(ViewHolder1)holder;
-            Item item=itemList.get(position);
+            FoodItem item=subCategory.getFoodItemList().get(position);
+            holder1.switch1.setChecked(item.isAvailable());
             holder1.textView.setText(item.getName());
             holder1.textView2.setText(item.getPrice());
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("download.jpeg");
+            try {
+                final File localFile = File.createTempFile("download", "jpeg");
+                storageRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                Log.d("Image", ""+taskSnapshot);
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                holder1.imageView.setImageBitmap(bitmap);
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        else if(viewType== CATEGORY_LAUNDRY)
+        if(CATEGORY== CATEGORY_LAUNDRY)
         {
             ViewHolder2 holder1=(ViewHolder2) holder;
-            Item item=itemList.get(position);
+            LaundryItem item=subCategory.getLaundryItemList().get(position);
+            holder1.switch1.setChecked(item.isAvailable());
             holder1.textView.setText(item.getName());
             holder1.textView2.setText(item.getPrice());
         }
-        else if(viewType== CATEGORY_RENTALS)
+        if(CATEGORY== CATEGORY_RENTALS)
         {
             ViewHolder3 holder1=(ViewHolder3) holder;
-            holder1.textView.setText("Bike");
-            holder1.textView2.setText("1100"+"/day");
-//            Item item=itemList.get(position);
-//            holder1.textView.setText(item.getName());
-//            holder1.textView2.setText(item.getPrice());
+            RentalItem item=subCategory.getRentalItemList().get(position);
+            holder1.switch1.setChecked(item.isAvailable());
+            holder1.textView.setText(item.getName());
+            holder1.textView2.setText(item.getPrice()+"/day");
         }
-        else if(viewType==CATEGORY_LOCALGUIDES)
+        if(CATEGORY==CATEGORY_LOCALGUIDES)
         {
-            ViewHolder4 holder2=(ViewHolder4)holder;
-
-            //Hard coded data for now
-
-            holder2.textView.setText("Person1");
-            holder2.textView1.setText("9834275490");
-//          RentalItem item=itemList.get(Position);
-//          holder2.textView.setText(item.getName());
+            ViewHolder4 holder1=(ViewHolder4)holder;
+            LocalGuideItem item=subCategory.getTouristItemList().get(position);
+            holder1.switch1.setChecked(item.isAvailable());
+            holder1.textView.setText(item.getName());
+            holder1.textView1.setText(item.getPhoneNumber());
         }
-
     }
     @Override
     public int getItemCount() {
-        return itemList.size();
-    }
+        if(CATEGORY==CATEGORY_FOOD)return subCategory.getFoodItemList().size();
+        if(CATEGORY==CATEGORY_LAUNDRY)return subCategory.getLaundryItemList().size();
+        if(CATEGORY==CATEGORY_LOCALGUIDES)return subCategory.getTouristItemList().size();
+        if(CATEGORY==CATEGORY_RENTALS)return subCategory.getRentalItemList().size();
+        return subCategory.getFoodItemList().size();
 
+}
 //FOOD-row_item_food.xml
 class ViewHolder1 extends RecyclerView.ViewHolder{
 
@@ -159,38 +205,85 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
         String itemInactive="Item is inactive";
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                FoodItem item;
+                item = subCategory.getFoodItemList().get(getAdapterPosition());
 
-                if(isChecked) {
-//                  imageView.setForeground(Drawable.createFromPath(null));
+                if (isChecked) {
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(true);
+                                                    }
+                                                }
+                                            }}
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
                     Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
                 }
                 else
                 {
-                    //imageView.setForeground(Drawable.createFromPath("#961C2229"));
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(false);
+                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
+                                                    }
+                                                }
+                                            }}
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
+                    imageView.setForeground(Drawable.createFromPath("#961C2229"));
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
                     Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        imageButton.setOnClickListener(new View.OnClickListener() {
 
+        imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Item item=itemList.get(getAdapterPosition());
-//                //send the item data
-               AddItemFood addItemFood= new AddItemFood();
-//                // pass arguments to fragment
+                FoodItem item=subCategory.getFoodItemList().get(getAdapterPosition());
+//                send the item data
+                AddItemFood addItemFood= new AddItemFood();
+//                pass arguments to fragment
                 Bundle bundle = new Bundle();
 
-//                // item we want to populate
-               bundle.putSerializable("item", (Serializable) item);
-
+//                item we want to populate
+                bundle.putSerializable("item", (Serializable) item);
+                bundle.putString("subCategoryName", subCategory.getSubCategoryName());
                 addItemFood.setArguments(bundle);
 
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
@@ -201,7 +294,8 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
             }
         });
     }
-}
+    }
+
 
 //Laundry-row_item_laundry.xml
 class ViewHolder2 extends RecyclerView.ViewHolder{
@@ -226,14 +320,64 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                LaundryItem item;
+                item = subCategory.getLaundryItemList().get(getAdapterPosition());
 
-                if(isChecked) {
+                if (isChecked) {
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(true);
+                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
+                                                    }
+                                                }
+                                            }}
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
                     Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
                 }
                 else
                 {
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(false);
+                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
+                                                    }
+                                                }
+                                            }}
+
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
                     Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
@@ -244,13 +388,13 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
 
             @Override
             public void onClick(View view) {
-                Item item=itemList.get(getAdapterPosition());
-                LaundryItem item1=new LaundryItem(item.getName(),item.getCategoryName(),item.getSubCategory(),
-                Integer.parseInt(item.getPrice()),true);
+                LaundryItem item=subCategory.getLaundryItemList().get(getAdapterPosition());
+                LaundryItem item1=new LaundryItem(item.getName(), Integer.parseInt(item.getPrice()),true);
 
                 AddItemLaundry addItemLaundry=new AddItemLaundry();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("item", (Serializable) item1);
+                bundle.putString("subCategoryName", subCategory.getSubCategoryName());
 
                 addItemLaundry.setArguments(bundle);
 
@@ -286,31 +430,82 @@ class ViewHolder3 extends RecyclerView.ViewHolder{
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                RentalItem item;
+                item = subCategory.getRentalItemList().get(getAdapterPosition());
 
-                if(isChecked) {
+                if (isChecked) {
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(true);
+                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
+                                                    }
+                                                }
+                                            }}
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
                     Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
                 }
                 else
                 {
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(false);
+                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
+                                                    }
+                                                }
+                                            }}
+
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
                     Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
         imageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Item item=itemList.get(getAdapterPosition());
-                RentalItem item1=new RentalItem(item.getName(),item.getCategoryName(),item.getSubCategory(),
-                        Integer.parseInt(item.getPrice()),true);
+                RentalItem item=subCategory.getRentalItemList().get(getAdapterPosition());
+                RentalItem item1=new RentalItem(item.getName(),Integer.parseInt(item.getPrice()),true);
 
                 AddItemRental addItemRental=new AddItemRental();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("item", (Serializable) item1);
+                bundle.putString("subCategoryName",subCategory.getSubCategoryName());
                 addItemRental.setArguments(bundle);
 
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
@@ -344,14 +539,65 @@ class ViewHolder4 extends RecyclerView.ViewHolder{
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
-            {
-                if(isChecked) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                LocalGuideItem item;
+                item = subCategory.getTouristItemList().get(getAdapterPosition());
+
+                if (isChecked) {
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(true);
+                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
+                                                    }
+                                                }
+                                            }}
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
+                    Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
-                    Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                 }
-                else {
+                else
+                {
+                    FirebaseDatabase.getInstance()
+                            .getReference("categories")
+                            .child(categoryName)
+                            .child(subCategory.getSubCategoryName())
+                            .addListenerForSingleValueEvent(
+                                    new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot items : snapshot.getChildren()) {
+                                                    String name = items.child("name").getValue().toString();
+                                                    Boolean available = Boolean.parseBoolean(items.child("available").getValue().toString());
+                                                    if(item.getName().equals(name)){
+                                                        items.child("available").getRef().setValue(false);
+                                                        Log.d("Snapshot", ""+items.child("available").getValue().toString());
+                                                    }
+                                                }
+                                            }}
+
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    }
+                            );
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
                     Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
@@ -362,13 +608,15 @@ class ViewHolder4 extends RecyclerView.ViewHolder{
 
             @Override
             public void onClick(View view) {
-                Item item=itemList.get(getAdapterPosition());
-                LocalGuideItem item1=new LocalGuideItem(item.getName(),item.getCategoryName(),item.getSubCategory(),
-                        item.getPrice(),true);
+                LocalGuideItem item=subCategory.getTouristItemList().get(getAdapterPosition());
+//                LocalGuideItem item1=new LocalGuideItem(item.getName(),item.getCategoryName(),item.getSubCategory(),
+//                        item.getPrice(),true);
+                LocalGuideItem item1=new LocalGuideItem(item.getName(),item.getPhoneNumber(),true);
 
                 AddItemLocalGuide addItemRental=new AddItemLocalGuide();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("item", (Serializable) item1);
+                bundle.putString("subCategoryName", subCategory.getSubCategoryName());
 
                 addItemRental.setArguments(bundle);
 

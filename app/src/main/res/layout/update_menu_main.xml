@@ -7,17 +7,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
         android:gravity="left"
         android:padding="10dp"
         android:text="Update Menu"
         android:paddingBottom="16dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:fontFamily="@font/inter_extrabold"
+        android:textColor="#141414"
+        android:textSize="24sp"
+        android:lineSpacingExtra="3sp"
+        android:textFontWeight="700"
         android:visibility="visible"
         tools:ignore="MissingConstraints" />
 
@@ -69,7 +77,7 @@
         android:layout_marginEnd="16dp"
         android:text="Orders"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

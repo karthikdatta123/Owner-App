@@ -3,34 +3,23 @@ package com.example.ownerapp;
 import java.io.Serializable;
 
 public class LaundryItem implements Serializable {
-    private String itemName, categoryName, subCategory;
+    private String itemName;
     private int itemPrice;
-    private boolean active;
+    private boolean available;
 
-    public LaundryItem(String itemName, String categoryName, String subCategory,  int itemPrice, boolean isActive) {
+    public LaundryItem(String itemName, int itemPrice, boolean available) {
         this.itemName = itemName;
-        this.categoryName = categoryName;
-        this.subCategory = subCategory;
         this.itemPrice = itemPrice;
-        this.active = isActive;
+        this.available = available;
     }
-
     public String getName() {
         return itemName;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public String getSubCategory() {
-        return subCategory;
-    }
-
     public String  getPrice() { return Integer.toString(itemPrice); }
 
-    public boolean isActive() {
-        return active;
+    public boolean isAvailable() {
+        return available;
     }
 
     public void setName(String name) {this.itemName=name;}

@@ -5,6 +5,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,15 +17,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         replaceFragment(new UpdateMenuMain());
-
-        DAOOwner daoOwner=new DAOOwner();
-
     }
 
     private void replaceFragment(UpdateMenuMain updateMenuMain) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.FrameLayout, updateMenuMain);
+        transaction.commit();
+    }
+    public void replaceFragment1(SecondFragment secondFragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.FrameLayout, secondFragment);
         transaction.commit();
     }
 }
