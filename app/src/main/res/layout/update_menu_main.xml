@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/textView"
@@ -76,7 +77,7 @@
         android:layout_marginEnd="16dp"
         android:text="Orders"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

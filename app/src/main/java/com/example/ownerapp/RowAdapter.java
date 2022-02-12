@@ -4,6 +4,8 @@ package com.example.ownerapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -26,12 +28,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -117,13 +126,27 @@ public class RowAdapter extends RecyclerView.Adapter {
             holder1.switch1.setChecked(item.isAvailable());
             holder1.textView.setText(item.getName());
             holder1.textView2.setText(item.getPrice());
-//            StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-//            StorageReference photoReference= storageReference.child("download.jpeg");
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("download.jpeg");
+            try {
+                final File localFile = File.createTempFile("download", "jpeg");
+                storageRef.getFile(localFile)
+                        .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                Log.d("Image", ""+taskSnapshot);
+                                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                                holder1.imageView.setImageBitmap(bitmap);
 
-            //holder1.imageView.setImageResource(photoReference);
-//            Glide.with(getContext())
-//                    .load(photoReference)
-//                    .into(holder1.imageView );
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if(CATEGORY== CATEGORY_LAUNDRY)
         {
