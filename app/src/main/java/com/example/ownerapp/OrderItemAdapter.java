@@ -1,4 +1,5 @@
 package com.example.ownerapp;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
             viewHolder.Order.setText(items.get(position));
-            viewHolder.Quantity.setText(" x"+quantity.get(position)+"                     Rs"+price.get(position));
+            viewHolder.Quantity.setText(" x"+quantity.get(position));
     }
 
     @Override

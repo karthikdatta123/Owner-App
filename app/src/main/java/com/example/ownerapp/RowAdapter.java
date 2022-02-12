@@ -1,7 +1,6 @@
 package com.example.ownerapp;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -197,7 +195,7 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
         constraintLayout=itemView.findViewById(R.id.constraintLayout);
         imageView=itemView.findViewById(R.id.imageView);
         textView=itemView.findViewById(R.id.textView);
-        textView2=itemView.findViewById(R.id.textView2);
+        textView2=itemView.findViewById(R.id.heading);
         imageButton=itemView.findViewById(R.id.imageButton);
         switch1=itemView.findViewById(R.id.switch1);
 
@@ -309,7 +307,7 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
 
         constraintLayout=itemView.findViewById(R.id.constraintLayout);
         textView=itemView.findViewById(R.id.textView);
-        textView2=itemView.findViewById(R.id.textView2);
+        textView2=itemView.findViewById(R.id.heading);
         imageButton=itemView.findViewById(R.id.imageButton);
         switch1=itemView.findViewById(R.id.switch1);
 
@@ -419,7 +417,7 @@ class ViewHolder3 extends RecyclerView.ViewHolder{
         super(itemView);
         constraintLayout=itemView.findViewById(R.id.constraintLayout);
         textView=itemView.findViewById(R.id.textView);
-        textView2=itemView.findViewById(R.id.textView2);
+        textView2=itemView.findViewById(R.id.heading);
         imageButton=itemView.findViewById(R.id.imageButton);
         switch1=itemView.findViewById(R.id.switch1);
 

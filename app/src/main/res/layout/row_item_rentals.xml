@@ -13,7 +13,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="@font/inter_fonts"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
@@ -22,12 +22,12 @@
         tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/heading"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/inter_fonts"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/cardview_dark_background"
@@ -44,6 +44,7 @@
         android:checked="true"
         android:minHeight="48dp"
         android:text=""
+        android:fontFamily="@font/inter_fonts"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
@@ -60,7 +61,7 @@
         android:src="@drawable/pencil"
         app:layout_constraintEnd_toEndOf="@+id/switch1"
         app:layout_constraintStart_toStartOf="@+id/switch1"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/heading"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -68,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/heading"
         app:srcCompat="@drawable/currency_inr" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

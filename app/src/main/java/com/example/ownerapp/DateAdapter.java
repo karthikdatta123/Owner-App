@@ -1,4 +1,6 @@
 package com.example.ownerapp;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ public class DateAdapter extends RecyclerView.Adapter<DateAdapter.ViewHolder> {
 public  List<Orders> list=new ArrayList<Orders>();
     public DateAdapter(List<Orders> list){
        this.list=list;
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,7 +42,7 @@ public  List<Orders> list=new ArrayList<Orders>();
         Orders s=list.get(position);
         viewHolder.dateView.setText(s.date);
         viewHolder.recyclerView1.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView1.getContext()));
-        RoomAdapter room_view=new RoomAdapter(s.rooms,s);
+        RoomAdapter room_view=new RoomAdapter(s.rooms);
         viewHolder.recyclerView1.setAdapter(room_view);
     }
     @Override

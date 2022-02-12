@@ -12,35 +12,38 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     public  List<Room> list=new ArrayList<Room>();
     Orders order;
-
+DatabaseReference mDatabaseReference;
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView roomNo,total_cost;
+        TextView roomNo,total_cost,time,h1;
         RecyclerView recyclerView3;
         Button button;
 
         public ViewHolder(View view) {
             super(view);
+
             roomNo=view.findViewById(R.id.room);
             recyclerView3=view.findViewById(R.id.recycle_view3);
-            button=view.findViewById(R.id.button);
-            total_cost=view.findViewById(R.id.total);
+            button=view.findViewById(R.id.button2);
+            total_cost=view.findViewById(R.id.total_cost);
+            time=view.findViewById(R.id.time);
+            h1=view.findViewById(R.id.heading_room);
         }
     }
 
-    public RoomAdapter(List<Room> list,Orders o1) {
+    public RoomAdapter(List<Room> list) {
       this.list=list;
-      this.order=order;
+
     }
 
     @Override
@@ -54,30 +57,48 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Room s=list.get(position);
-        viewHolder.roomNo.setText("Room#"+s.room_no+",   "+s.time);
-        viewHolder.total_cost.setText("Total Price to pay:     "+s.total_price);
+        viewHolder.roomNo.setText("#"+s.room_no+",");
+        viewHolder.time.setText(s.time);
+        viewHolder.total_cost.setText(s.total_price.toString());
+        if(s.confirm.equals(true))
+        {
+            viewHolder.button.setBackgroundColor(Color.WHITE);
+            viewHolder.button.setTextColor(Color.parseColor("#278817"));
+            viewHolder.button.setText("Order Confirmed");
+        }else{
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
-            @Override
+
+           @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Order confirmed", Toast.LENGTH_SHORT).show();
-                viewHolder.button.setBackgroundColor(Color.WHITE);
-                viewHolder.button.setTextColor(Color.RED);
-                viewHolder.button.setText("Order Confirmed");
-               /*DatabaseReference Ref = FirebaseDatabase.getInstance().getReference("Orders").child("");
-                /*HashMap c=new HashMap();
-                c.put("confirmation",false);*/
+                   FirebaseDatabase.getInstance().getReference("Orders").addValueEventListener(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot snapshot) {
+                           list=new ArrayList<Room>();
+                           if (snapshot.exists()) {
 
-               /* Ref.child().updateChildren().addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
+                               for (DataSnapshot item : snapshot.getChildren()) {
+                                   String Time = item.child("time").getValue().toString();
+                                   Integer roomid = Integer.parseInt(item.child("roomID").getValue().toString());
+                                   if (s.time.equals(Time) && roomid.equals(s.room_no)) {
+                                       item.child("confirmation").getRef().setValue((Boolean) true);
+                                           viewHolder.button.setBackgroundColor(Color.WHITE);
+                                           viewHolder.button.setTextColor(Color.parseColor("#278817"));
+                                           viewHolder.button.setText("Order Confirmed");
+                                           break;
+                                   }
+                               }
+                           }
+                       }
 
-                    }
-                });*/
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError error) {
+                           // mDatabaseReference.removeEventListener(myListener);
+                       }
+                   });
+           }
 
-            }
+        });}
 
-
-        });
         viewHolder.recyclerView3.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView3.getContext()));
         OrderItemAdapter item_view=new OrderItemAdapter(s.items,s.quantity,s.price);
         viewHolder.recyclerView3.setAdapter(item_view);
