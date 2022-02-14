@@ -96,7 +96,7 @@ DatabaseReference mDatabaseReference;
         if(s.confirm.equals(true))
         {
             viewHolder.button.setBackgroundColor(Color.WHITE);
-            viewHolder.button.setTextColor(Color.parseColor("#CB102F"));
+            viewHolder.button.setTextColor(Color.parseColor("#EE2E24"));
             viewHolder.button.setText("Order Confirmed");
         }else{
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ DatabaseReference mDatabaseReference;
                                    if (s.time.equals(Time) && roomid.equals(s.room_no)) {
                                        item.child("confirmation").getRef().setValue((Boolean) true);
                                            viewHolder.button.setBackgroundColor(Color.WHITE);
-                                           viewHolder.button.setTextColor(Color.parseColor("#CB102F"));
+                                           viewHolder.button.setTextColor(Color.parseColor("#EE2E24"));
                                            viewHolder.button.setText("Order Confirmed");
                                            break;
                                    }

@@ -64,7 +64,6 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         if (isExpanded) {
             holder.expandable_icon.setImageResource(R.drawable.chevron_up_arrow);
             holder.divider.setVisibility(View.GONE);
-
         } else{
             holder.expandable_icon.setImageResource(R.drawable.chevron_down_arrow);
             holder.divider.setVisibility(View.VISIBLE);
