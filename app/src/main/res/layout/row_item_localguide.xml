@@ -13,9 +13,11 @@
         android:layout_marginTop="8dp"
         android:text="Person 1"
         android:fontFamily="@font/inter_fonts"
-        android:padding="8dp"
-        android:textColor="@color/cardview_dark_background"
+        android:textSize="16sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#141414"
+        app:flow_wrapMode="aligned"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,9 +60,11 @@
         android:layout_marginBottom="8dp"
         android:padding="8dp"
         android:text="9922334829"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/cardview_dark_background"
-        android:textStyle="bold"
+        android:fontFamily="@font/inter_bold"
+        android:lineHeight="22sp"
+        android:textSize="16sp"
+        android:gravity="bottom"
+        android:textColor="#141414"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />

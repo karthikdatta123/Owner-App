@@ -17,16 +17,19 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp"
+        android:fontFamily="@font/inter_bold"
         android:gravity="left"
-        android:padding="10dp"
-        android:text="Update Menu"
-        android:paddingBottom="16dp"
-        android:fontFamily="@font/inter_extrabold"
-        android:textColor="#141414"
-        android:textSize="24sp"
         android:lineSpacingExtra="3sp"
+        android:text="Update Menu"
+        android:textColor="#141414"
         android:textFontWeight="700"
+        android:textSize="25sp"
+        android:lineHeight="30sp"
+        app:flow_verticalAlign="center"
         android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <View
@@ -36,6 +39,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="?android:attr/listDivider"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -53,33 +57,22 @@
         app:layout_constraintTop_toBottomOf="@id/textView"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
-        android:backgroundTint="@color/white"
-        android:text="Add Category"
-        android:textColor="@color/black"
-        android:visibility="gone"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/inter_bold"
+        android:lineSpacingExtra="3sp"
         android:text="Orders"
-        android:fontFamily="@font/inter_fonts"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#141414"
+        android:textFontWeight="700"
+        android:textSize="25sp"
+        android:lineHeight="30sp"
+        app:flow_verticalAlign="center"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,22 +9,27 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="183dp"
-        android:layout_height="30dp"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_fonts"
+        android:textSize="16sp"
+
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black"
-        android:fontFamily="@font/inter_fonts"
+        android:textColor="#141414"
+        app:flow_wrapMode="aligned"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
+        android:padding="4dp"
         android:id="@+id/imageView"
-        android:layout_width="66dp"
-        android:layout_height="65dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:scaleType="centerCrop"
+
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
@@ -34,21 +39,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.Avatar"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/heading"
         android:layout_width="72dp"
         android:layout_height="24dp"
-        android:fontFamily="@font/inter_fonts"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="bottom"
+        android:lineHeight="22sp"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/cardview_dark_background"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="1.0" />
+        android:textColor="#141414"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/imageView2" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch1"
@@ -84,9 +90,11 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:srcCompat="@drawable/currency_inr"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/currency_inr" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

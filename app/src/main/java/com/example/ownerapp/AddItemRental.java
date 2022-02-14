@@ -82,6 +82,13 @@ public class AddItemRental extends BottomSheetDialogFragment {
                                                                   .getReference("categories")
                                                                   .child(categoryName)
                                                                   .child(subCategoryName);
+                    // If name is changed
+                    if(!item.getName().equals(name))
+                    {
+                        databaseReference.child(name).child("available").setValue(item.isAvailable());
+                        //delete old item
+                        DAOOwner.deleteItem(categoryName, subCategoryName, item.getName());
+                    }
                     databaseReference.child(name).child("name").setValue(name);
                     databaseReference.child(name).child("price").setValue(price);
 
@@ -93,6 +100,7 @@ public class AddItemRental extends BottomSheetDialogFragment {
                                                                   .child(subCategoryName);
                     DatabaseReference newItemRef = databaseReference.child(name);
                     newItemRef.setValue(rentalItem);
+                    newItemRef.child("price").setValue(price);
                 }
                 //Add Item
                 Toast.makeText(getContext(), "Changes Applied", Toast.LENGTH_SHORT).show();
