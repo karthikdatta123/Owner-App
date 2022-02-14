@@ -3,6 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.15885416666666666" />
+        <entry key="app/src/main/res/drawable/rounded_backgound.xml" value="0.15885416666666666" />
+        <entry key="app/src/main/res/drawable/roundedbutton.xml" value="0.18489583333333334" />
+        <entry key="app/src/main/res/drawable/star_red.xml" value="0.15885416666666666" />
+        <entry key="app/src/main/res/drawable/trash_can_outline.xml" value="0.15885416666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.16875" />
+        <entry key="app/src/main/res/layout/categories_list.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.165625" />
+        <entry key="app/src/main/res/layout/date.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/final_view.xml" value="0.2270074198741342" />
+        <entry key="app/src/main/res/layout/fragement_addsubcategory.xml" value="0.3587939698492462" />
+        <entry key="app/src/main/res/layout/fragment_addfood.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/fragment_addlaundry.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/fragment_addlocalguide.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/fragment_addrental.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.165625" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/order_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/room_no.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/row_item_food.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/row_item_laundry.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/row_item_localguide.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/row_item_rentals.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/sub_categories_list.xml" value="0.14270833333333333" />
+        <entry key="app/src/main/res/layout/summary_owner.xml" value="0.16875" />
+        <entry key="app/src/main/res/layout/text_row_item.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/layout/update_menu_main.xml" value="0.1" />
         <entry key="../../../../layout/custom_preview.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/add_circle.xml" value="0.1265625" />
         <entry key="app/src/main/res/drawable/camera_outline.xml" value="0.1265625" />
