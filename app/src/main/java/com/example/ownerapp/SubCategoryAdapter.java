@@ -55,12 +55,20 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         boolean isExpanded= subCategory.isExpanded();
         holder.expandableLayout.setVisibility(isExpanded? View.VISIBLE : View.GONE);
 
-
         //populate recyclerView with row_item.xml UI
         rowAdapter = new RowAdapter(categoryName, subCategory, context.getApplicationContext());
         holder.recyclerView1.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
         holder.recyclerView1.setHasFixedSize(true);
         holder.recyclerView1.setAdapter(rowAdapter);
+
+        if (isExpanded) {
+            holder.expandable_icon.setImageResource(R.drawable.chevron_up_arrow);
+            holder.divider.setVisibility(View.GONE);
+
+        } else{
+            holder.expandable_icon.setImageResource(R.drawable.chevron_down_arrow);
+            holder.divider.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
