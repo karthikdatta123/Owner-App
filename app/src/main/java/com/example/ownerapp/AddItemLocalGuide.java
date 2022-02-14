@@ -72,6 +72,13 @@ public class AddItemLocalGuide extends BottomSheetDialogFragment {
                                                                  .getReference("categories")
                                                                  .child(categoryName)
                                                                  .child(subCategoryName);
+                    // If name is changed
+                    if(!item.getName().equals(name))
+                    {
+                        databaseReference.child(name).child("available").setValue(item.isAvailable());
+                        //delete old item
+                        DAOOwner.deleteItem(categoryName, subCategoryName, item.getName());
+                    }
                     databaseReference.child(name).child("name").setValue(name);
                     databaseReference.child(name).child("phoneNumber").setValue(phoneNumber);
                 }

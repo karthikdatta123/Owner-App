@@ -3,4 +3,8 @@
     <style name="NoBackgroundDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">@null</item>
     </style>
+    <style name="ShapeAppearanceOverlay.Avatar" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15%</item>
+    </style>
 </resources>

@@ -124,9 +124,16 @@ public class RowAdapter extends RecyclerView.Adapter {
             holder1.switch1.setChecked(item.isAvailable());
             holder1.textView.setText(item.getName());
             holder1.textView2.setText(item.getPrice());
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("download.jpeg");
+            holder1.imageView.setImageResource(R.drawable.food_background);
+            StorageReference storageRef = DAOOwner.getFirebaseStorage().getReference().child(""+item.getName()+".jpeg");
             try {
-                final File localFile = File.createTempFile("download", "jpeg");
+                //final File localFile = File.createTempFile("download", "jpeg");
+
+                final File localFile = File.createTempFile(item.getName(), "jpeg");
+                // Either display the item.imageURL or default it to Thali Image.jpeg
+                String url = item.getImageURL().equals("")?"Thali Image" : item.getImageURL();
+                final File localFile1 = File.createTempFile(url, "jpeg");
+                StorageReference storageRef1 = DAOOwner.getFirebaseStorage().getReference().child(url+".jpeg");
                 storageRef.getFile(localFile)
                         .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                             @Override
@@ -134,12 +141,28 @@ public class RowAdapter extends RecyclerView.Adapter {
                                 Log.d("Image", ""+taskSnapshot);
                                 Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
                                 holder1.imageView.setImageBitmap(bitmap);
-
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+//                        set default image here
+//                        holder1.imageView.setImageResource(R.mipmap.thali_image);
+                        storageRef1.getFile(localFile1)
+                                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                        Log.d("Image", ""+taskSnapshot);
+                                        Bitmap bitmap = BitmapFactory.decodeFile(localFile1.getAbsolutePath());
+                                        holder1.imageView.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //set default image here
+                                Log.d("Image view","Failed");
+                                holder1.imageView.setImageResource(R.mipmap.thali_image);
+                            }
+                        });
                     }
                 });
             } catch (IOException e) {
@@ -233,7 +256,7 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
                                         }
                                     }
                             );
-                    Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
                 }
@@ -265,7 +288,7 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
                     imageView.setForeground(Drawable.createFromPath("#961C2229"));
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
-                    Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -345,7 +368,7 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
                                         }
                                     }
                             );
-                    Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
                 }
@@ -378,7 +401,7 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
                             );
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
-                    Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -387,7 +410,7 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
             @Override
             public void onClick(View view) {
                 LaundryItem item=subCategory.getLaundryItemList().get(getAdapterPosition());
-                LaundryItem item1=new LaundryItem(item.getName(), Integer.parseInt(item.getPrice()),true);
+                LaundryItem item1=new LaundryItem(item.getName(), Integer.parseInt(item.getPrice()),item.isAvailable());
 
                 AddItemLaundry addItemLaundry=new AddItemLaundry();
                 Bundle bundle = new Bundle();
@@ -455,7 +478,7 @@ class ViewHolder3 extends RecyclerView.ViewHolder{
                                         }
                                     }
                             );
-                    Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
                 }
@@ -488,7 +511,7 @@ class ViewHolder3 extends RecyclerView.ViewHolder{
                             );
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
-                    Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -498,7 +521,7 @@ class ViewHolder3 extends RecyclerView.ViewHolder{
             @Override
             public void onClick(View view) {
                 RentalItem item=subCategory.getRentalItemList().get(getAdapterPosition());
-                RentalItem item1=new RentalItem(item.getName(),Integer.parseInt(item.getPrice()),true);
+                RentalItem item1=new RentalItem(item.getName(),Integer.parseInt(item.getPrice()),item.isAvailable());
 
                 AddItemRental addItemRental=new AddItemRental();
                 Bundle bundle = new Bundle();
@@ -565,7 +588,7 @@ class ViewHolder4 extends RecyclerView.ViewHolder{
                                         }
                                     }
                             );
-                    Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemActive, Toast.LENGTH_SHORT).show();
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.BLACK));
                 }
@@ -598,7 +621,7 @@ class ViewHolder4 extends RecyclerView.ViewHolder{
                             );
                     switch1.setThumbTintList(ColorStateList.valueOf(Color.WHITE));
                     switch1.setTrackTintList(ColorStateList.valueOf(Color.LTGRAY));
-                    Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(RowAdapter.getContext(), itemInactive, Toast.LENGTH_SHORT).show();
                 }
             }
         });
