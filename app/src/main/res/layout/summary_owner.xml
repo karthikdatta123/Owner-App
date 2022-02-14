@@ -11,23 +11,25 @@
     <TextView
         android:id="@+id/heading"
         android:layout_width="wrap_content"
-        android:layout_height="30sp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="50sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_bold"
-        android:textFontWeight="700"
+        android:gravity="center"
         android:text="@string/orders"
         android:textColor="#141414"
+        android:textFontWeight="700"
         android:textSize="25sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintStart_toEndOf="@+id/back"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Recycle_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -39,11 +41,13 @@
         android:id="@+id/back"
         android:layout_width="29dp"
         android:layout_height="29dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginStart="8dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintBottom_toBottomOf="@+id/heading"
         app:layout_constraintEnd_toStartOf="@+id/heading"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/heading" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

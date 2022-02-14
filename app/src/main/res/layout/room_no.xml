@@ -2,58 +2,65 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="230dp"
+        android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/recycle_view3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/heading_room"
-            android:layout_width="wrap_content"
+            android:layout_width="55dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/inter_fonts"
-            android:text="@string/room_no"
-            android:textColor="#100101"
+            android:text="Room No"
+            android:textColor="#141414"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/room"
-            android:layout_width="59dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="3dp"
+            android:layout_weight="2"
             android:fontFamily="@font/inter_fonts"
-            android:gravity="bottom|left"
-            android:textColor="#100101"
-            android:textSize="15sp"
+            android:text="#110"
+            android:textColor="#141414"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/time"
-            android:layout_width="110dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_weight="1"
+            android:layout_weight="5"
+
             android:fontFamily="@font/inter_fonts"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="right"
+            android:paddingRight="16dp"
+            android:text="10:00:05"
             android:textColor="#141414"
-            android:textSize="13sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.018"
@@ -67,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycle_view3">
@@ -79,8 +86,11 @@
             android:layout_weight="1"
             android:fontFamily="@font/inter_fonts"
             android:text="@string/total"
+
             android:textColor="#141414"
-            android:textSize="16sp" />
+
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/total_cost"
@@ -89,7 +99,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/inter_fonts"
             android:textColor="#141414"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -98,8 +109,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         android:backgroundTint="#278817"
         android:bottomLeftRadius="8dp"
         android:bottomRightRadius="8dp"
@@ -115,12 +126,13 @@
         android:id="@+id/Delete"
         android:layout_width="42dp"
         android:layout_height="39dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintTop_toTopOf="@+id/button2"
         app:srcCompat="@drawable/ic_baseline_delete_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

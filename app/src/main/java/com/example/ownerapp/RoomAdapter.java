@@ -60,7 +60,7 @@ DatabaseReference mDatabaseReference;
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Room s=list.get(position);
-        viewHolder.roomNo.setText("#"+s.room_no+",");
+        viewHolder.roomNo.setText("#"+s.room_no);
         viewHolder.time.setText(s.time);
         viewHolder.total_cost.setText(s.total_price.toString());
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
