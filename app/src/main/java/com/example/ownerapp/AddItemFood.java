@@ -131,7 +131,9 @@ public class AddItemFood extends BottomSheetDialogFragment {
           @Override
           public void onClick(View view) {
             String name = textInputEditText1.getText().toString();
+            String priceString=textInputEditText2.getText().toString();
             int price = Integer.parseInt(textInputEditText2.getText().toString());
+
             boolean available = switch1.isChecked();
 
             // Edit Item
@@ -143,7 +145,8 @@ public class AddItemFood extends BottomSheetDialogFragment {
                       .child("Food")
                       .child(subCategoryName);
               databaseReference.child(name).child("name").setValue(name);
-              databaseReference.child(name).child("price").setValue(price);
+              databaseReference.child(name).child("price").setValue(priceString);
+//              databaseReference.child(name).child("price").setValue(price);
               // If name is changed
               if(!item.getName().equals(name))
               {
@@ -159,8 +162,6 @@ public class AddItemFood extends BottomSheetDialogFragment {
             }
             // Add Item
             else {
-              //FoodItem foodItem = new FoodItem(name, price, "", available);
-
               FoodItem foodItem = new FoodItem(name, price, imageURL, available);
               DatabaseReference databaseReference =
                   DAOOwner.getFirebaseDatabase()
@@ -169,7 +170,8 @@ public class AddItemFood extends BottomSheetDialogFragment {
                       .child(subCategoryName);
               DatabaseReference newItemRef = databaseReference.child(name);
               newItemRef.setValue(foodItem);
-              newItemRef.child("price").setValue(price);
+//              newItemRef.child("price").setValue(price);
+              newItemRef.child("price").setValue(priceString);
             }
             Toast.makeText(getContext(), "Changes Applied", Toast.LENGTH_SHORT).show();
             dismiss();

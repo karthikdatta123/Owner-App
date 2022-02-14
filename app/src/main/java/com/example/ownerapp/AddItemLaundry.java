@@ -76,8 +76,9 @@ public class AddItemLaundry extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 String name = textInputEditText1.getText().toString();
-                int price = Integer.parseInt(
-                        textInputEditText2.getText().toString());
+                String priceString=textInputEditText2.getText().toString();
+                int price = Integer.parseInt(textInputEditText2.getText().toString());
+
                 if(item!=null) {
                     DatabaseReference databaseReference = DAOOwner.getFirebaseDatabase()
                                                                   .getReference("categories")
@@ -91,7 +92,8 @@ public class AddItemLaundry extends BottomSheetDialogFragment {
                         DAOOwner.deleteItem(categoryName, subCategoryName, item.getName());
                     }
                     databaseReference.child(name).child("name").setValue(name);
-                    databaseReference.child(name).child("price").setValue(price);
+                    databaseReference.child(name).child("price").setValue(priceString);
+//                  databaseReference.child(name).child("price").setValue(price);
                 }
                 else{
                     LaundryItem laundryItem = new LaundryItem(name, price, true);
@@ -101,7 +103,8 @@ public class AddItemLaundry extends BottomSheetDialogFragment {
                                                                   .child(subCategoryName);
                     DatabaseReference newItemRef = databaseReference.child(name);
                     newItemRef.setValue(laundryItem);
-                    newItemRef.child("price").setValue(price);
+//                    newItemRef.child("price").setValue(price);
+                    newItemRef.child("price").setValue(priceString);
                 }
                 Toast.makeText(getContext(),"Changes Applied",Toast.LENGTH_SHORT).show();
                 dismiss();
