@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.widget.Toast;
@@ -28,6 +29,7 @@ DatabaseReference mDatabaseReference;
         TextView roomNo,total_cost,time,h1;
         RecyclerView recyclerView3;
         Button button;
+        ImageView delete;
 
         public ViewHolder(View view) {
             super(view);
@@ -38,6 +40,7 @@ DatabaseReference mDatabaseReference;
             total_cost=view.findViewById(R.id.total_cost);
             time=view.findViewById(R.id.time);
             h1=view.findViewById(R.id.heading_room);
+            delete=view.findViewById(R.id.Delete);
         }
     }
 
@@ -60,6 +63,36 @@ DatabaseReference mDatabaseReference;
         viewHolder.roomNo.setText("#"+s.room_no+",");
         viewHolder.time.setText(s.time);
         viewHolder.total_cost.setText(s.total_price.toString());
+        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.remove(viewHolder.getAdapterPosition());
+                FirebaseDatabase.getInstance().getReference("Orders").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        list=new ArrayList<Room>();
+                        if (snapshot.exists()) {
+
+                            for (DataSnapshot item : snapshot.getChildren()) {
+                                String Time = item.child("time").getValue().toString();
+                                Integer roomid = Integer.parseInt(item.child("roomID").getValue().toString());
+                                if (s.time.equals(Time) && roomid.equals(s.room_no)) {
+                                   item.getRef().removeValue();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // mDatabaseReference.removeEventListener(myListener);
+                    }
+                });
+
+
+            }
+        });
         if(s.confirm.equals(true))
         {
             viewHolder.button.setBackgroundColor(Color.WHITE);
@@ -98,6 +131,7 @@ DatabaseReference mDatabaseReference;
            }
 
         });}
+
 
         viewHolder.recyclerView3.setLayoutManager(new LinearLayoutManager(viewHolder.recyclerView3.getContext()));
         OrderItemAdapter item_view=new OrderItemAdapter(s.items,s.quantity,s.price);
