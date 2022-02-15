@@ -12,6 +12,6 @@
     <string name="orders">Orders</string>
     <string name="button">Confirm Order</string>
     <string name="confirm">Confirm Order</string>
-    <string name="total">Total Price: ₹</string>
+    <string name="total">Total Price : ₹</string>
     <string name="room_no">Room </string>
 </resources>

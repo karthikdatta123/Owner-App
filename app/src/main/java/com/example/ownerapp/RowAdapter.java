@@ -125,15 +125,15 @@ public class RowAdapter extends RecyclerView.Adapter {
             holder1.textView.setText(item.getName());
             holder1.textView2.setText(item.getPrice());
             holder1.imageView.setImageResource(R.drawable.food_background);
-            StorageReference storageRef = DAOOwner.getFirebaseStorage().getReference().child(""+item.getName()+".jpeg");
+            String url=item.getImageURL().equals("")?"Thali Image":item.getImageURL();
+            StorageReference storageRef = DAOOwner.getFirebaseStorage().getReference().child(""+url+".jpeg");
+            StorageReference storageRef1 = DAOOwner.getFirebaseStorage().getReference().child("Thali Image.jpeg");
             try {
                 //final File localFile = File.createTempFile("download", "jpeg");
 
-                final File localFile = File.createTempFile(item.getName(), "jpeg");
+                final File localFile = File.createTempFile(url, "jpeg");
+                final File localFile1 = File.createTempFile("Thali Image", "jpeg");
                 // Either display the item.imageURL or default it to Thali Image.jpeg
-                String url = item.getImageURL().equals("")?"Thali Image" : item.getImageURL();
-                final File localFile1 = File.createTempFile(url, "jpeg");
-                StorageReference storageRef1 = DAOOwner.getFirebaseStorage().getReference().child(url+".jpeg");
                 storageRef.getFile(localFile)
                         .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                             @Override
@@ -234,7 +234,7 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
                 item = subCategory.getFoodItemList().get(getAdapterPosition());
 
                 if (isChecked) {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())
@@ -262,7 +262,7 @@ class ViewHolder1 extends RecyclerView.ViewHolder{
                 }
                 else
                 {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())
@@ -345,7 +345,7 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
                 item = subCategory.getLaundryItemList().get(getAdapterPosition());
 
                 if (isChecked) {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())
@@ -374,7 +374,7 @@ class ViewHolder2 extends RecyclerView.ViewHolder{
                 }
                 else
                 {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())
@@ -455,7 +455,7 @@ class ViewHolder3 extends RecyclerView.ViewHolder{
                 item = subCategory.getRentalItemList().get(getAdapterPosition());
 
                 if (isChecked) {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())
@@ -484,7 +484,7 @@ class ViewHolder3 extends RecyclerView.ViewHolder{
                 }
                 else
                 {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())
@@ -565,7 +565,7 @@ class ViewHolder4 extends RecyclerView.ViewHolder{
                 item = subCategory.getTouristItemList().get(getAdapterPosition());
 
                 if (isChecked) {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())
@@ -594,7 +594,7 @@ class ViewHolder4 extends RecyclerView.ViewHolder{
                 }
                 else
                 {
-                    FirebaseDatabase.getInstance()
+                    DAOOwner.getFirebaseDatabase()
                             .getReference("categories")
                             .child(categoryName)
                             .child(subCategory.getSubCategoryName())

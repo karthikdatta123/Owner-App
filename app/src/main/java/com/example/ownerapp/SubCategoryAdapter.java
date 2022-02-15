@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,12 +55,19 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         boolean isExpanded= subCategory.isExpanded();
         holder.expandableLayout.setVisibility(isExpanded? View.VISIBLE : View.GONE);
 
-
         //populate recyclerView with row_item.xml UI
         rowAdapter = new RowAdapter(categoryName, subCategory, context.getApplicationContext());
         holder.recyclerView1.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
         holder.recyclerView1.setHasFixedSize(true);
         holder.recyclerView1.setAdapter(rowAdapter);
+
+        if (isExpanded) {
+            holder.expandable_icon.setImageResource(R.drawable.chevron_up_arrow);
+            holder.divider.setVisibility(View.GONE);
+        } else{
+            holder.expandable_icon.setImageResource(R.drawable.chevron_down_arrow);
+            holder.divider.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -73,6 +81,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         RecyclerView recyclerView1;
         ImageView expandable_icon;
         Button button;
+        View divider;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,19 +90,26 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             recyclerView1=itemView.findViewById(R.id.recyclerView1);
             expandable_icon=itemView.findViewById(R.id.expandable_icon);
             button=itemView.findViewById(R.id.button);
+            divider=itemView.findViewById(R.id.divider2);
 
-            expandable_icon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    SubCategory subCategory = subCategoryList.get(getAdapterPosition());
-                    boolean isExpanded= subCategory.isExpanded();
-                    if(isExpanded)
-                        expandable_icon.setImageResource(R.drawable.chevron_up_arrow);
-                    else  expandable_icon.setImageResource(R.drawable.chevron_down_arrow);
-                    subCategory.setExpanded(!isExpanded);
-                    notifyItemChanged(getAdapterPosition());
-                }
-            });
+      expandable_icon.setOnClickListener(
+          new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              SubCategory subCategory = subCategoryList.get(getAdapterPosition());
+              boolean isExpanded = subCategory.isExpanded();
+              if (isExpanded) {
+                expandable_icon.setImageResource(R.drawable.chevron_up_arrow);
+                divider.setVisibility(View.GONE);
+
+              } else{
+                  expandable_icon.setImageResource(R.drawable.chevron_down_arrow);
+                  divider.setVisibility(View.VISIBLE);
+              }
+              subCategory.setExpanded(!isExpanded);
+              notifyItemChanged(getAdapterPosition());
+            }
+          });
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

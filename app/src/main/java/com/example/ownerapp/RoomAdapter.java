@@ -60,7 +60,7 @@ DatabaseReference mDatabaseReference;
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Room s=list.get(position);
-        viewHolder.roomNo.setText("#"+s.room_no+",");
+        viewHolder.roomNo.setText("#"+s.room_no);
         viewHolder.time.setText(s.time);
         viewHolder.total_cost.setText(s.total_price.toString());
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,7 @@ DatabaseReference mDatabaseReference;
         if(s.confirm.equals(true))
         {
             viewHolder.button.setBackgroundColor(Color.WHITE);
-            viewHolder.button.setTextColor(Color.parseColor("#278817"));
+            viewHolder.button.setTextColor(Color.parseColor("#EE2E24"));
             viewHolder.button.setText("Order Confirmed");
         }else{
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +115,7 @@ DatabaseReference mDatabaseReference;
                                    if (s.time.equals(Time) && roomid.equals(s.room_no)) {
                                        item.child("confirmation").getRef().setValue((Boolean) true);
                                            viewHolder.button.setBackgroundColor(Color.WHITE);
-                                           viewHolder.button.setTextColor(Color.parseColor("#278817"));
+                                           viewHolder.button.setTextColor(Color.parseColor("#EE2E24"));
                                            viewHolder.button.setText("Order Confirmed");
                                            break;
                                    }
